@@ -2,6 +2,7 @@ defmodule ChosenApiWeb.Router do
   use ChosenApiWeb, :router
 
   pipeline :api do
+    plug CORSPlug, [origin: "http://localhost:3000"]
     plug :accepts, ["json"]
     plug :fetch_session
     plug :fetch_flash

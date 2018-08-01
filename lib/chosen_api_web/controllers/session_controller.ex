@@ -18,10 +18,10 @@ defmodule ChosenApiWeb.SessionController do
         Logger.debug inspect user
         session_id = Login.gen_session_id("F")
         Accounts.add_session(user, session_id, System.system_time(:second))
-        Logger.debug "FOOBAR"
+        message = "You have been logged in."
         Login.add_session(conn, session_id, user.id)
         |> add_remember_me(user.id, params)
-        |> login_success(user_path(conn, :index))
+        |> render("info.json", %{info: message})
       {:error, message} ->
         error(conn, :unauthorized, 401)
     end
@@ -30,7 +30,7 @@ defmodule ChosenApiWeb.SessionController do
   def delete(%Plug.Conn{assigns: %{current_user: user}} = conn, _) do
     <<session_id::binary-size(17), _::binary>> = get_session(conn, :phauxth_session_id)
     Accounts.delete_session(user, session_id)
-    message = "You have been logged out"
+    message = "You have been logged out."
     delete_session(conn, :phauxth_session_id)
     |> Phauxth.Remember.delete_rem_cookie()
     |> render("info.json", %{info: message})
