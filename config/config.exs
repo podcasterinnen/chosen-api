@@ -19,7 +19,8 @@ config :chosen_api, ChosenApiWeb.Endpoint,
 
 # Phauxth authentication configuration
 config :phauxth,
-  endpoint: ChosenApiWeb.Endpoint
+  endpoint: ChosenApiWeb.Endpoint,
+  token_salt: "iYSQOB3i"
 
 # Mailer configuration
 config :chosen_api, ChosenApi.Mailer,
