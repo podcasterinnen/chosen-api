@@ -46,11 +46,4 @@ defmodule ChosenApiWeb.UserControllerTest do
     conn = post(conn, user_path(conn, :create), user: @invalid_attrs)
     assert json_response(conn, 422)["errors"] != %{}
   end
-
-  @tag login: "reg@example.com"
-  test "deletes chosen user", %{conn: conn, user: user} do
-    conn = delete(conn, user_path(conn, :delete, user))
-    assert response(conn, 204)
-    refute Accounts.get(user.id)
-  end
 end

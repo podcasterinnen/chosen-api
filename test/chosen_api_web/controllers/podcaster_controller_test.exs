@@ -24,24 +24,6 @@ defmodule ChosenApiWeb.PodcasterControllerTest do
     end
   end
 
-  describe "create podcaster" do
-    test "renders podcaster when data is valid", %{conn: conn} do
-      conn = post conn, podcaster_path(conn, :create), podcaster: @create_attrs
-      assert %{"id" => id} = json_response(conn, 201)["data"]
-
-      conn = get conn, podcaster_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "forename" => "some forename",
-        "surname" => "some surname"}
-    end
-
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, podcaster_path(conn, :create), podcaster: @invalid_attrs
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
   describe "update podcaster" do
     setup [:create_podcaster]
 
@@ -59,18 +41,6 @@ defmodule ChosenApiWeb.PodcasterControllerTest do
     test "renders errors when data is invalid", %{conn: conn, podcaster: podcaster} do
       conn = put conn, podcaster_path(conn, :update, podcaster), podcaster: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "delete podcaster" do
-    setup [:create_podcaster]
-
-    test "deletes chosen podcaster", %{conn: conn, podcaster: podcaster} do
-      conn = delete conn, podcaster_path(conn, :delete, podcaster)
-      assert response(conn, 204)
-      assert_error_sent 404, fn ->
-        get conn, podcaster_path(conn, :show, podcaster)
-      end
     end
   end
 

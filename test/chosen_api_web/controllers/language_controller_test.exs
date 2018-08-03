@@ -24,54 +24,6 @@ defmodule ChosenApiWeb.LanguageControllerTest do
     end
   end
 
-  describe "create language" do
-    test "renders language when data is valid", %{conn: conn} do
-      conn = post conn, language_path(conn, :create), language: @create_attrs
-      assert %{"id" => id} = json_response(conn, 201)["data"]
-
-      conn = get conn, language_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "name" => "some name"}
-    end
-
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, language_path(conn, :create), language: @invalid_attrs
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "update language" do
-    setup [:create_language]
-
-    test "renders language when data is valid", %{conn: conn, language: %Language{id: id} = language} do
-      conn = put conn, language_path(conn, :update, language), language: @update_attrs
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get conn, language_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "name" => "some updated name"}
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, language: language} do
-      conn = put conn, language_path(conn, :update, language), language: @invalid_attrs
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "delete language" do
-    setup [:create_language]
-
-    test "deletes chosen language", %{conn: conn, language: language} do
-      conn = delete conn, language_path(conn, :delete, language)
-      assert response(conn, 204)
-      assert_error_sent 404, fn ->
-        get conn, language_path(conn, :show, language)
-      end
-    end
-  end
-
   defp create_language(_) do
     language = fixture(:language)
     {:ok, language: language}

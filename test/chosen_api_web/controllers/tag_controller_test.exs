@@ -24,23 +24,6 @@ defmodule ChosenApiWeb.TagControllerTest do
     end
   end
 
-  describe "create tag" do
-    test "renders tag when data is valid", %{conn: conn} do
-      conn = post conn, tag_path(conn, :create), tag: @create_attrs
-      assert %{"id" => id} = json_response(conn, 201)["data"]
-
-      conn = get conn, tag_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "name" => "some name"}
-    end
-
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, tag_path(conn, :create), tag: @invalid_attrs
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
   defp create_tag(_) do
     tag = fixture(:tag)
     {:ok, tag: tag}
