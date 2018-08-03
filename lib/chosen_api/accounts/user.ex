@@ -11,7 +11,7 @@ defmodule ChosenApi.Accounts.User do
     field :confirmed_at, :utc_datetime
     field :reset_sent_at, :utc_datetime
     has_one :podcasters, Podcaster, foreign_key: :user_id
-    field(:sessions, {:map, :integer}, default: %{})
+    field(:sessions, {:map, :integer}, default: "{}")
 
     timestamps()
   end
