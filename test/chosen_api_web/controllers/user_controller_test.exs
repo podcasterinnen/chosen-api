@@ -48,30 +48,9 @@ defmodule ChosenApiWeb.UserControllerTest do
   end
 
   @tag login: "reg@example.com"
-  test "updates chosen user when data is valid", %{conn: conn, user: user} do
-    conn = put(conn, user_path(conn, :update, user), user: @update_attrs)
-    assert json_response(conn, 200)["data"]["id"] == user.id
-    updated_user = Accounts.get(user.id)
-    assert updated_user.email == "william@example.com"
-  end
-
-  @tag login: "reg@example.com"
-  test "does not update chosen user and renders errors when data is invalid", %{conn: conn, user: user} do
-    conn = put(conn, user_path(conn, :update, user), user: @invalid_attrs)
-    assert json_response(conn, 422)["errors"] != %{}
-  end
-
-  @tag login: "reg@example.com"
   test "deletes chosen user", %{conn: conn, user: user} do
     conn = delete(conn, user_path(conn, :delete, user))
     assert response(conn, 204)
     refute Accounts.get(user.id)
-  end
-
-  @tag login: "reg@example.com"
-  test "cannot delete other user", %{conn: conn, other: other} do
-    conn = delete(conn, user_path(conn, :delete, other))
-    assert json_response(conn, 403)["errors"]["detail"] =~ "not authorized"
-    assert Accounts.get(other.id)
   end
 end

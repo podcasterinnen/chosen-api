@@ -11,7 +11,7 @@ defmodule ChosenApi.Accounts.User do
     field :confirmed_at, :utc_datetime
     field :reset_sent_at, :utc_datetime
     has_one :podcasters, Podcaster, foreign_key: :user_id
-    field(:sessions, {:map, :integer}, default: "{}")
+    field(:sessions, {:map, :integer}, default: %{})
 
     timestamps()
   end
@@ -26,7 +26,7 @@ defmodule ChosenApi.Accounts.User do
   def create_changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:email, :password])
-    |> cast_assoc(:podcasters, required: true)
+    |> cast_assoc(:podcasters)
     |> validate_required([:email, :password])
     |> unique_email
     |> validate_password(:password)
