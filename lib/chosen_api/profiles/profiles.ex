@@ -20,6 +20,7 @@ defmodule ChosenApi.Profiles do
     Repo.all(Podcaster)
     |> Repo.preload([languages: (from p in Podcaster)])
     |> Repo.preload([podcasts: (from p in Podcaster)])
+    |> Repo.preload([tags: (from p in Podcaster)])
     |> Repo.preload(:references)
   end
 
@@ -41,6 +42,7 @@ defmodule ChosenApi.Profiles do
     Repo.get!(Podcaster, id)
     |> Repo.preload([languages: (from p in Podcaster)])
     |> Repo.preload([podcasts: (from p in Podcaster)])
+    |> Repo.preload([tags: (from p in Podcaster)])
     |> Repo.preload(:references)
   end
 
@@ -60,6 +62,7 @@ defmodule ChosenApi.Profiles do
     %Podcaster{}
     |> Repo.preload([languages: (from p in Podcaster)])
     |> Repo.preload([podcasts: (from p in Podcaster)])
+    |> Repo.preload([tags: (from p in Podcaster)])
     |> Repo.preload(:references)
     |> Podcaster.changeset(attrs)
     |> Repo.insert()

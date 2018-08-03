@@ -34,6 +34,7 @@ defmodule ChosenApi.Profiles.Podcaster do
   def changeset(podcaster, attrs) do
     podcaster
     |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long])
+    |> validate_required([:forename])
     |> cast_assoc(:references)
     |> cast_assoc(:podcasts, on_replace: :update)
     |> put_assoc(:languages, parse_languages(attrs))

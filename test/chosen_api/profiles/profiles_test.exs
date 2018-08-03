@@ -190,9 +190,9 @@ defmodule ChosenApi.ProfilesTest do
   describe "podcasts" do
     alias ChosenApi.Profiles.Podcast
 
-    @valid_attrs %{title: "some title", url: "some url"}
-    @update_attrs %{title: "some updated title", url: "some updated url"}
-    @invalid_attrs %{title: nil, url: nil}
+    @valid_attrs %{name: "some name", url: "some url"}
+    @update_attrs %{name: "some updated name", url: "some updated url"}
+    @invalid_attrs %{name: nil, url: nil}
 
     def podcast_fixture(attrs \\ %{}) do
       {:ok, podcast} =
@@ -215,7 +215,7 @@ defmodule ChosenApi.ProfilesTest do
 
     test "create_podcast/1 with valid data creates a podcast" do
       assert {:ok, %Podcast{} = podcast} = Profiles.create_podcast(@valid_attrs)
-      assert podcast.title == "some title"
+      assert podcast.name == "some name"
       assert podcast.url == "some url"
     end
 
@@ -227,7 +227,7 @@ defmodule ChosenApi.ProfilesTest do
       podcast = podcast_fixture()
       assert {:ok, podcast} = Profiles.update_podcast(podcast, @update_attrs)
       assert %Podcast{} = podcast
-      assert podcast.title == "some updated title"
+      assert podcast.name == "some updated name"
       assert podcast.url == "some updated url"
     end
 
