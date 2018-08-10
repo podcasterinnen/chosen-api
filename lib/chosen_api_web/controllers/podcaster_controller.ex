@@ -10,6 +10,11 @@ defmodule ChosenApiWeb.PodcasterController do
 
   plug :id_check when action in [:update]
 
+  def index(conn, %{"user_id" => user_id}) do
+    podcaster = Profiles.get_podcaster_by_user_id!(user_id)
+    render(conn, "show.json", podcaster: podcaster)
+  end
+
   def index(conn, _params) do
     podcasters = Profiles.list_podcasters()
     render(conn, "index.json", podcasters: podcasters)

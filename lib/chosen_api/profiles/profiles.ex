@@ -46,6 +46,14 @@ defmodule ChosenApi.Profiles do
     |> Repo.preload(:references)
   end
 
+  def get_podcaster_by_user_id!(id) do
+    Repo.get_by!(Podcaster, user_id: id)
+    |> Repo.preload([languages: (from p in Podcaster)])
+    |> Repo.preload([podcasts: (from p in Podcaster)])
+    |> Repo.preload([tags: (from p in Podcaster)])
+    |> Repo.preload(:references)
+  end
+
   @doc """
   Creates a podcaster.
 
