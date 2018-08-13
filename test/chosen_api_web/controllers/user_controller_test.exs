@@ -38,7 +38,7 @@ defmodule ChosenApiWeb.UserControllerTest do
 
   test "creates user when data is valid", %{conn: conn} do
     conn = post(conn, user_path(conn, :create), user: @create_attrs)
-    assert json_response(conn, 201)["data"]["id"]
+    assert json_response(conn, 200)["data"]["id"]
     assert Accounts.get_by(%{"email" => "bill@example.com"})
   end
 
