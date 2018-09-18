@@ -91,6 +91,7 @@ defmodule ChosenApi.Profiles do
   def update_podcaster(%Podcaster{} = podcaster, attrs) do
     podcaster
     |> Repo.preload(:tags)
+    |> Repo.preload(:languages)
     |> Podcaster.changeset(attrs)
     |> Repo.update()
   end
