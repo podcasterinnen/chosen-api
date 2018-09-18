@@ -42,7 +42,6 @@ defmodule ChosenApi.Profiles do
     Repo.get!(Podcaster, id)
     |> Repo.preload([languages: (from p in Podcaster)])
     |> Repo.preload([podcasts: (from p in Podcaster)])
-    |> Repo.preload([tags: (from p in Podcaster)])
     |> Repo.preload(:references)
   end
 
@@ -50,7 +49,6 @@ defmodule ChosenApi.Profiles do
     Repo.get_by!(Podcaster, user_id: id)
     |> Repo.preload([languages: (from p in Podcaster)])
     |> Repo.preload([podcasts: (from p in Podcaster)])
-    |> Repo.preload([tags: (from p in Podcaster)])
     |> Repo.preload(:references)
   end
 
@@ -90,7 +88,6 @@ defmodule ChosenApi.Profiles do
   """
   def update_podcaster(%Podcaster{} = podcaster, attrs) do
     podcaster
-    |> Repo.preload(:tags)
     |> Repo.preload(:languages)
     |> Podcaster.changeset(attrs)
     |> Repo.update()

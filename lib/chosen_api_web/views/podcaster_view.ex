@@ -20,7 +20,6 @@ defmodule ChosenApiWeb.PodcasterView do
     languages = Repo.all(Ecto.assoc(podcaster, :languages))
     references = Repo.all(Ecto.assoc(podcaster, :references))
     podcasts = Repo.all(Ecto.assoc(podcaster, :podcasts))
-    tags = Repo.all(Ecto.assoc(podcaster, :tags))
     %{id: podcaster.id,
       forename: podcaster.forename,
       surname: podcaster.surname,
@@ -32,7 +31,7 @@ defmodule ChosenApiWeb.PodcasterView do
       bio_short: podcaster.bio_short,
       bio_long: podcaster.bio_long,
       references: render_many(references, ReferenceView, "reference.json"),
-      tags: render_many(tags, TagView, "tag.json"),
+      tags: podcaster.tags,
       languages: render_many(languages, LanguageView, "language.json"),
       podcasts: render_many(podcasts, PodcastView, "podcast.json")}
   end
