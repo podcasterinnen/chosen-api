@@ -12,10 +12,8 @@ defmodule ChosenApiWeb.Router do
   scope "/", ChosenApiWeb do
     pipe_through :api
     resources "/podcasters", PodcasterController, only: [:show, :index]
-    resources "/languages", LanguageController, only: [:show, :index]
     resources "/references", ReferenceController, only: [:show, :index]
     resources "/podcasts", PodcastController, only: [:show, :index]
-    resources "/tags", TagController, only: [:show, :index]
     get "/confirm", ConfirmController, :index
     post "/password_resets", PasswordResetController, :create
     put "/password_resets/update", PasswordResetController, :update
@@ -23,7 +21,7 @@ defmodule ChosenApiWeb.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     post "/users", UserController, :create
     get "/users", UserController, :index
-    get "/users", UserController, :show
+    # get "/users/:id", UserController, :show
   end
 
   if Mix.env == :dev do

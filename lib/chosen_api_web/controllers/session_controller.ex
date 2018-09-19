@@ -18,11 +18,11 @@ defmodule ChosenApiWeb.SessionController do
         Logger.debug inspect user
         session_id = Login.gen_session_id("F")
         Accounts.add_session(user, session_id, System.system_time(:second))
-        message = "You have been logged in. Your User ID is #{user.id}."
+        # message = "You have been logged in. Your User ID is #{user.id}."
         Login.add_session(conn, session_id, user.id)
         |> add_remember_me(user.id, params)
         |> render("info.json", %{info: user.id})
-      {:error, message} ->
+      {:error} ->
         error(conn, :unauthorized, 401)
     end
   end

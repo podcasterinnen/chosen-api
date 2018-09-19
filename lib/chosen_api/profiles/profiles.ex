@@ -18,9 +18,7 @@ defmodule ChosenApi.Profiles do
   """
   def list_podcasters do
     Repo.all(Podcaster)
-    |> Repo.preload([languages: (from p in Podcaster)])
     |> Repo.preload([podcasts: (from p in Podcaster)])
-    |> Repo.preload([tags: (from p in Podcaster)])
     |> Repo.preload(:references)
   end
 
@@ -40,14 +38,12 @@ defmodule ChosenApi.Profiles do
   """
   def get_podcaster!(id) do
     Repo.get!(Podcaster, id)
-    |> Repo.preload([languages: (from p in Podcaster)])
     |> Repo.preload([podcasts: (from p in Podcaster)])
     |> Repo.preload(:references)
   end
 
   def get_podcaster_by_user_id!(id) do
     Repo.get_by!(Podcaster, user_id: id)
-    |> Repo.preload([languages: (from p in Podcaster)])
     |> Repo.preload([podcasts: (from p in Podcaster)])
     |> Repo.preload(:references)
   end
@@ -66,9 +62,7 @@ defmodule ChosenApi.Profiles do
   """
   def create_podcaster(attrs \\ %{}) do
     %Podcaster{}
-    |> Repo.preload([languages: (from p in Podcaster)])
     |> Repo.preload([podcasts: (from p in Podcaster)])
-    |> Repo.preload([tags: (from p in Podcaster)])
     |> Repo.preload(:references)
     |> Podcaster.changeset(attrs)
     |> Repo.insert()
@@ -88,7 +82,6 @@ defmodule ChosenApi.Profiles do
   """
   def update_podcaster(%Podcaster{} = podcaster, attrs) do
     podcaster
-    |> Repo.preload(:languages)
     |> Podcaster.changeset(attrs)
     |> Repo.update()
   end
@@ -120,102 +113,6 @@ defmodule ChosenApi.Profiles do
   """
   def change_podcaster(%Podcaster{} = podcaster) do
     Podcaster.changeset(podcaster, %{})
-  end
-
-  alias ChosenApi.Profiles.Language
-
-  @doc """
-  Returns the list of languages.
-
-  ## Examples
-
-      iex> list_languages()
-      [%Language{}, ...]
-
-  """
-  def list_languages do
-    Repo.all(Language)
-  end
-
-  @doc """
-  Gets a single language.
-
-  Raises `Ecto.NoResultsError` if the Language does not exist.
-
-  ## Examples
-
-      iex> get_language!(123)
-      %Language{}
-
-      iex> get_language!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_language!(id), do: Repo.get!(Language, id)
-
-  @doc """
-  Creates a language.
-
-  ## Examples
-
-      iex> create_language(%{field: value})
-      {:ok, %Language{}}
-
-      iex> create_language(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_language(attrs \\ %{}) do
-    %Language{}
-    |> Language.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a language.
-
-  ## Examples
-
-      iex> update_language(language, %{field: new_value})
-      {:ok, %Language{}}
-
-      iex> update_language(language, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_language(%Language{} = language, attrs) do
-    language
-    |> Language.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a Language.
-
-  ## Examples
-
-      iex> delete_language(language)
-      {:ok, %Language{}}
-
-      iex> delete_language(language)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_language(%Language{} = language) do
-    Repo.delete(language)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking language changes.
-
-  ## Examples
-
-      iex> change_language(language)
-      %Ecto.Changeset{source: %Language{}}
-
-  """
-  def change_language(%Language{} = language) do
-    Language.changeset(language, %{})
   end
 
   alias ChosenApi.Profiles.Reference
@@ -408,101 +305,5 @@ defmodule ChosenApi.Profiles do
   """
   def change_podcast(%Podcast{} = podcast) do
     Podcast.changeset(podcast, %{})
-  end
-
-  alias ChosenApi.Profiles.Tag
-
-  @doc """
-  Returns the list of tags.
-
-  ## Examples
-
-      iex> list_tags()
-      [%Tag{}, ...]
-
-  """
-  def list_tags do
-    Repo.all(Tag)
-  end
-
-  @doc """
-  Gets a single tag.
-
-  Raises `Ecto.NoResultsError` if the Tag does not exist.
-
-  ## Examples
-
-      iex> get_tag!(123)
-      %Tag{}
-
-      iex> get_tag!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_tag!(id), do: Repo.get!(Tag, id)
-
-  @doc """
-  Creates a tag.
-
-  ## Examples
-
-      iex> create_tag(%{field: value})
-      {:ok, %Tag{}}
-
-      iex> create_tag(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_tag(attrs \\ %{}) do
-    %Tag{}
-    |> Tag.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a tag.
-
-  ## Examples
-
-      iex> update_tag(tag, %{field: new_value})
-      {:ok, %Tag{}}
-
-      iex> update_tag(tag, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_tag(%Tag{} = tag, attrs) do
-    tag
-    |> Tag.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a Tag.
-
-  ## Examples
-
-      iex> delete_tag(tag)
-      {:ok, %Tag{}}
-
-      iex> delete_tag(tag)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_tag(%Tag{} = tag) do
-    Repo.delete(tag)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking tag changes.
-
-  ## Examples
-
-      iex> change_tag(tag)
-      %Ecto.Changeset{source: %Tag{}}
-
-  """
-  def change_tag(%Tag{} = tag) do
-    Tag.changeset(tag, %{})
   end
 end

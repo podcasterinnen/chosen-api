@@ -1,4 +1,28 @@
 defmodule ChosenApi.Profiles.Podcaster do
+
+  defmodule LanguageType do
+    @behaviour Ecto.Type
+    def type, do: :map
+  
+    def cast(languages) when is_list(languages) do
+      # Ecto Validation
+      # languages in downcase
+      {:ok, Enum.uniq(languages)}
+    end
+  
+    def cast(_), do: :error
+  
+    def load(%{"languages" => languages}) do
+      {:ok, languages}
+    end
+  
+    def dump(languages) when is_list(languages) do
+      {:ok, %{languages: languages}}
+    end
+  
+    def dump(_), do: :error
+  end  
+
   defmodule TagType do
     @behaviour Ecto.Type
     def type, do: :map
@@ -25,13 +49,9 @@ defmodule ChosenApi.Profiles.Podcaster do
   use Ecto.Schema
 
   import Ecto.Changeset
-  import Ecto.Query
 
-  alias ChosenApi.Repo
-  alias ChosenApi.Profiles.Language
   alias ChosenApi.Profiles.Reference
   alias ChosenApi.Profiles.Podcast
-  alias ChosenApi.Profiles.Tag
   alias ChosenApi.Accounts.User
 
   require Logger
@@ -46,7 +66,7 @@ defmodule ChosenApi.Profiles.Podcaster do
     field :remote_possible, :boolean
     field :bio_short, :string
     field :bio_long, :string
-    many_to_many :languages, Language, join_through: "podcasters_languages"
+    field :languages, LanguageType
     field :tags, TagType
     many_to_many :podcasts, Podcast, join_through: "podcasters_podcasts"
     has_many :references, Reference, foreign_key: :podcaster_id
@@ -58,29 +78,9 @@ defmodule ChosenApi.Profiles.Podcaster do
   @doc false
   def changeset(podcaster, attrs) do
     podcaster
-    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags])
+    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages])
     |> validate_required([:forename])
     |> cast_assoc(:references)
     |> cast_assoc(:podcasts, on_replace: :update)
-    |> put_assoc(:languages, parse_languages(attrs))
-  end
-
-  defp parse_languages(attrs) do
-    Logger.info "Var value: #{inspect(attrs["languages"])}"
-    (attrs["languages"] || "")
-    |> String.split(",")
-    |> Enum.map(&String.trim/1)
-    |> Enum.reject(& &1 == "")
-    |> insert_and_get_all_languages()
-  end
-
-  defp insert_and_get_all_languages([]) do
-    []
-  end
-
-  defp insert_and_get_all_languages(names) do
-    maps = Enum.map(names, &%{name: &1})
-    Repo.insert_all Language, maps, on_conflict: :replace_all, conflict_target: :name, on_replace: :delete
-    Repo.all(from t in Language, where: t.name in ^names)
   end
 end
