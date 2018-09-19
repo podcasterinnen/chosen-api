@@ -82,6 +82,8 @@ defmodule ChosenApi.Profiles do
   """
   def update_podcaster(%Podcaster{} = podcaster, attrs) do
     podcaster
+    |> Repo.preload([podcasts: (from p in Podcaster)])
+    |> Repo.preload(:references)
     |> Podcaster.changeset(attrs)
     |> Repo.update()
   end
