@@ -58,7 +58,7 @@ defmodule ChosenApi.Profiles.Podcaster do
     field :bio_long, :string
     field :languages, LanguageType
     field :tags, TagType
-    many_to_many :podcasts, Podcast, join_through: "podcasters_podcasts"
+    many_to_many :podcasts, Podcast, [join_through: "podcasters_podcasts", on_replace: :delete, on_delete: :delete_all]
     has_many :references, Reference, [foreign_key: :podcaster_id, on_replace: :delete]
     belongs_to :user, User, references: :id
 
