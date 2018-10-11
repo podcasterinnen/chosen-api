@@ -73,13 +73,8 @@ defmodule ChosenApi.Profiles.Podcaster do
   end
 
   use Ecto.Schema
-
   import Ecto.Changeset
-
-  alias ChosenApi.Profiles.Reference
-  alias ChosenApi.Profiles.Podcast
   alias ChosenApi.Accounts.User
-
   require Logger
 
   schema "podcasters" do

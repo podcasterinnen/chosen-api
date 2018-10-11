@@ -5,7 +5,7 @@ defmodule ChosenApiWeb.UserControllerTest do
   alias ChosenApi.Accounts
 
   @create_attrs %{email: "bill@example.com", password: "hard2guess"}
-  @update_attrs %{email: "william@example.com"}
+  # @update_attrs %{email: "william@example.com"}
   @invalid_attrs %{email: nil}
 
   setup %{conn: conn} = config do
