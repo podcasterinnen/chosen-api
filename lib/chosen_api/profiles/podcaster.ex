@@ -52,7 +52,25 @@ defmodule ChosenApi.Profiles.Podcaster do
       {:ok, %{podcasts: podcasts}}
     end
     def dump(_), do: :error
-  end  
+  end
+
+  defmodule ReferenceType do
+    @behaviour Ecto.Type
+    def type, do: :map
+    def cast(references) when is_list(references) do
+      # Todo: Ecto Validation
+      # Todo: references in downcase
+      {:ok, Enum.uniq(references)}
+    end
+    def cast(_), do: :error
+    def load(%{"references" => references}) do
+      {:ok, references}
+    end
+    def dump(references) when is_list(references) do
+      {:ok, %{references: references}}
+    end
+    def dump(_), do: :error
+  end
 
   use Ecto.Schema
 
@@ -77,7 +95,7 @@ defmodule ChosenApi.Profiles.Podcaster do
     field :languages, LanguageType
     field :tags, TagType
     field :podcasts, PodcastType
-    has_many :references, Reference, [foreign_key: :podcaster_id, on_replace: :delete]
+    field :references, ReferenceType
     belongs_to :user, User, references: :id
 
     timestamps()
@@ -86,8 +104,7 @@ defmodule ChosenApi.Profiles.Podcaster do
   @doc false
   def changeset(podcaster, attrs) do
     podcaster
-    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts])
+    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts, :references])
     |> validate_required([:forename])
-    |> cast_assoc(:references)
   end
 end
