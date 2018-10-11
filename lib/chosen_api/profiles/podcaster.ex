@@ -16,7 +16,7 @@ defmodule ChosenApi.Profiles.Podcaster do
       {:ok, %{languages: languages}}
     end
     def dump(_), do: :error
-  end  
+  end
 
   defmodule TagType do
     @behaviour Ecto.Type
@@ -32,6 +32,24 @@ defmodule ChosenApi.Profiles.Podcaster do
     end
     def dump(tags) when is_list(tags) do
       {:ok, %{tags: tags}}
+    end
+    def dump(_), do: :error
+  end
+
+  defmodule PodcastType do
+    @behaviour Ecto.Type
+    def type, do: :map
+    def cast(podcasts) when is_list(podcasts) do
+      # Todo: Ecto Validation
+      # Todo: podcasts in downcase
+      {:ok, Enum.uniq(podcasts)}
+    end
+    def cast(_), do: :error
+    def load(%{"podcasts" => podcasts}) do
+      {:ok, podcasts}
+    end
+    def dump(podcasts) when is_list(podcasts) do
+      {:ok, %{podcasts: podcasts}}
     end
     def dump(_), do: :error
   end  
@@ -58,7 +76,7 @@ defmodule ChosenApi.Profiles.Podcaster do
     field :bio_long, :string
     field :languages, LanguageType
     field :tags, TagType
-    many_to_many :podcasts, Podcast, [join_through: "podcasters_podcasts", on_replace: :delete, on_delete: :delete_all]
+    field :podcasts, PodcastType
     has_many :references, Reference, [foreign_key: :podcaster_id, on_replace: :delete]
     belongs_to :user, User, references: :id
 
@@ -68,9 +86,8 @@ defmodule ChosenApi.Profiles.Podcaster do
   @doc false
   def changeset(podcaster, attrs) do
     podcaster
-    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages])
+    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts])
     |> validate_required([:forename])
     |> cast_assoc(:references)
-    |> cast_assoc(:podcasts)
   end
 end

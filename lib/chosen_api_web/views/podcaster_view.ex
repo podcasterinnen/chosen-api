@@ -2,7 +2,6 @@ defmodule ChosenApiWeb.PodcasterView do
   use ChosenApiWeb, :view
 
   alias ChosenApiWeb.ReferenceView
-  alias ChosenApiWeb.PodcastView
   alias ChosenApiWeb.PodcasterView
   alias ChosenApi.Repo
 
@@ -16,7 +15,6 @@ defmodule ChosenApiWeb.PodcasterView do
 
   def render("podcaster.json", %{podcaster: podcaster}) do
     references = Repo.all(Ecto.assoc(podcaster, :references))
-    podcasts = Repo.all(Ecto.assoc(podcaster, :podcasts))
     %{id: podcaster.id,
       forename: podcaster.forename,
       surname: podcaster.surname,
@@ -30,6 +28,7 @@ defmodule ChosenApiWeb.PodcasterView do
       references: render_many(references, ReferenceView, "reference.json"),
       tags: podcaster.tags,
       languages: podcaster.languages,
-      podcasts: render_many(podcasts, PodcastView, "podcast.json")}
+      podcasts: podcaster.podcasts
+    }
   end
 end
