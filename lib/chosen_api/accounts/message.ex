@@ -39,7 +39,7 @@ defmodule ChosenApi.Accounts.Message do
   def confirm_request(address, key) do
     prep_mail(address)
     |> subject("Confirm your account")
-    |> text_body("Confirm your email here http://www.example.com/confirm?key=#{key}")
+    |> text_body("Confirm your email here http://podcasterinnen.org/confirm?key=#{key}")
     |> Mailer.deliver_now()
   end
 
@@ -59,7 +59,7 @@ defmodule ChosenApi.Accounts.Message do
     prep_mail(address)
     |> subject("Reset your password")
     |> text_body(
-        "Reset your password at http://www.example.com/password_resets/edit?key=#{key}"
+        "Reset your password at http://podcasterinnen.org/password_resets/edit?key=#{key}"
       )
     |> Mailer.deliver_now()
   end

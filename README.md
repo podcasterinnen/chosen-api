@@ -20,6 +20,10 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
 
+### Bamboo Mailer
+
+Visit [`localhost:4000/sent_emails`](http://localhost:4000/sent_emails) to see emails sent by [Bamboo Adapter](https://github.com/thoughtbot/bamboo).
+
 ## Learn more
 
   * Official website: http://www.phoenixframework.org/
