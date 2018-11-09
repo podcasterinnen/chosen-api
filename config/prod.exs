@@ -32,6 +32,12 @@ config :chosen_api, ChosenApi.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true
 
+config :chosen_api, ChosenApi.Mailer,
+  server: System.get_env("MAILER_SERVER"),
+  hostname: System.get_env("MAILER_HOSTNAME"),
+  username: System.get_env("MAILER_USERNAME"),
+  password: System.get_env("MAILER_PASSWORD")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
