@@ -38,8 +38,8 @@ defmodule ChosenApi.Accounts.Message do
   """
   def confirm_request(address, key) do
     prep_mail(address)
-    |> subject("podcasterinnen.org – Verifiziere deine E-Mail-Adresse")
-    |> text_body("Bitte verifiziere deine E-Mail-Adresse hier https://staging.podcasterinnen.org/confirm?key=#{key}")
+    |> subject("podcasterinnen.org – Bestätige deine E-Mail-Adresse")
+    |> text_body("Liebe Podcasterin, bitte bestätige deine E-Mail-Adresse indem du auf folgenden Link klickst: https://staging.podcasterinnen.org/confirm?key=#{key}")
     |> Mailer.deliver_now()
   end
 
@@ -50,7 +50,7 @@ defmodule ChosenApi.Accounts.Message do
     prep_mail(address)
     |> subject("podcasterinnen.org – Passwort zurücksetzen")
     |> text_body(
-        "Du hast gerade versucht dein Passwort zurückzusetzen, allerdings konnten wir keinen Userinnen-Account zu deiner E-Mail-Adresse finden. Schreib uns doch eine Mail an contact@podcasterinnen.org. Wir helfen dir gerne weiter."
+        "Du hast gerade versucht dein Passwort zurückzusetzen, allerdings konnten wir keinen Userinnen-Account zu deiner E-Mail-Adresse finden. Schreib uns doch eine Mail an contact@podcasterinnen.org. Wir helfen dir gerne weiter. Das podcasterinnen.org-Team"
       )
     |> Mailer.deliver_now()
   end
@@ -70,7 +70,7 @@ defmodule ChosenApi.Accounts.Message do
   def confirm_success(address) do
     prep_mail(address)
     |> subject("podcasterinnen.org – Deine E-Mail-Adresse wurde bestätigt")
-    |> text_body("Herzlichen Glückwunsch, deine E-Mail-Adresse wurde bestätigt.")
+    |> text_body("Liebe Podcasterin, du hast dich erfolgreich bei https://podcasterinnen.org registriert. Um dir ein aussagekräftiges Profil anzulegen, kannst du dich erneut auf der https://podcasterinnen.org/session einloggen und kannst dann sofort loslegen.")
     |> Mailer.deliver_now()
   end
 
