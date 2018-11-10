@@ -38,8 +38,8 @@ defmodule ChosenApi.Accounts.Message do
   """
   def confirm_request(address, key) do
     prep_mail(address)
-    |> subject("Confirm your account")
-    |> text_body("Confirm your email here http://podcasterinnen.org/confirm?key=#{key}")
+    |> subject("podcasterinnen.org – Verifiziere deine E-Mail-Adresse")
+    |> text_body("Bitte verifiziere deine E-Mail-Adresse hier https://staging.podcasterinnen.org/confirm?key=#{key}")
     |> Mailer.deliver_now()
   end
 
@@ -48,18 +48,18 @@ defmodule ChosenApi.Accounts.Message do
   """
   def reset_request(address, nil) do
     prep_mail(address)
-    |> subject("Reset your password")
+    |> subject("podcasterinnen.org – Passwort zurücksetzen")
     |> text_body(
-        "You requested a password reset, but no user is associated with the email you provided."
+        "Du hast gerade versucht dein Passwort zurückzusetzen, allerdings konnten wir keinen Userinnen-Account zu deiner E-Mail-Adresse finden. Schreib uns doch eine Mail an contact@podcasterinnen.org. Wir helfen dir gerne weiter."
       )
     |> Mailer.deliver_now()
   end
 
   def reset_request(address, key) do
     prep_mail(address)
-    |> subject("Reset your password")
+    |> subject("podcasterinnen.org – Passwort zurücksetzen")
     |> text_body(
-        "Reset your password at http://podcasterinnen.org/password_resets/edit?key=#{key}"
+        "Du kannst dein Passwort hier https://staging.podcasterinnen.org/password_resets/edit?key=#{key} zurücksetzen."
       )
     |> Mailer.deliver_now()
   end
@@ -69,8 +69,8 @@ defmodule ChosenApi.Accounts.Message do
   """
   def confirm_success(address) do
     prep_mail(address)
-    |> subject("Confirmed account")
-    |> text_body("Your account has been confirmed.")
+    |> subject("podcasterinnen.org – Deine E-Mail-Adresse wurde bestätigt")
+    |> text_body("Herzlichen Glückwunsch, deine E-Mail-Adresse wurde bestätigt.")
     |> Mailer.deliver_now()
   end
 
@@ -79,8 +79,8 @@ defmodule ChosenApi.Accounts.Message do
   """
   def reset_success(address) do
     prep_mail(address)
-    |> subject("Password reset")
-    |> text_body("Your password has been reset.")
+    |> subject("podcasterinnen.org – Passwort zurückgesetzt")
+    |> text_body("Herzlichen Glückwunsch, dein Passwort wurde zurückgesetzt..")
     |> Mailer.deliver_now()
   end
 
