@@ -32,8 +32,8 @@ defmodule ChosenApiWeb.Endpoint do
     store: :cookie,
     key: "_chosen_api_key",
     signing_salt: "QfQ/VaM5"
-  
-  plug CORSPlug, [origin: "http://localhost:3000"]
+
+  plug CORSPlug
 
   plug ChosenApiWeb.Router
 
