@@ -18,7 +18,7 @@ defmodule ChosenApi.Repo.Migrations.Init do
       add :twitter_url, :text
       add :remote_possible, :boolean
       add :bio_short, :string
-      add :bio_long, :string
+      add :bio_long, :text
       add :city, :string
       add :country, :string
       add :tags, :map
