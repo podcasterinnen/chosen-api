@@ -91,6 +91,7 @@ defmodule ChosenApi.Profiles.Podcaster do
     field :tags, TagType
     field :podcasts, PodcastType
     field :references, ReferenceType
+    field :profile_state, :string
     belongs_to :user, User, references: :id
 
     timestamps()
@@ -99,7 +100,7 @@ defmodule ChosenApi.Profiles.Podcaster do
   @doc false
   def changeset(podcaster, attrs) do
     podcaster
-    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts, :references])
+    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts, :references, :profile_state])
     |> validate_required([:forename])
   end
 end

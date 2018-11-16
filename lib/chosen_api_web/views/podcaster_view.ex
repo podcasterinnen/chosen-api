@@ -25,7 +25,8 @@ defmodule ChosenApiWeb.PodcasterView do
       references: podcaster.references,
       tags: podcaster.tags,
       languages: podcaster.languages,
-      podcasts: podcaster.podcasts
+      podcasts: podcaster.podcasts,
+      profile_state: podcaster.profile_state,
     }
   end
 end
