@@ -27,6 +27,13 @@ defmodule ChosenApiWeb.PodcasterView do
       languages: podcaster.languages,
       podcasts: podcaster.podcasts,
       profile_state: podcaster.profile_state,
+      talks: podcaster.talks,
+      workshops: podcaster.workshops,
+      foreign_language: podcaster.foreign_language,
+      record_outside: podcaster.record_outside,
+      guests: podcaster.guests,
+      travel: podcaster.travel,
+      podcast_production: podcaster.podcast_production
     }
   end
 end
