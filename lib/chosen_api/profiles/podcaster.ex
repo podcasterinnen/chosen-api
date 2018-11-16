@@ -107,7 +107,7 @@ defmodule ChosenApi.Profiles.Podcaster do
   @doc false
   def changeset(podcaster, attrs) do
     podcaster
-    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts, :references, :profile_state, :talks, :workshops, :forein_language, :record_outside, :guests, :travel, :podcast_production])
+    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts, :references, :profile_state, :talks, :workshops, :foreign_language, :record_outside, :guests, :travel, :podcast_production])
     |> validate_required([:forename])
   end
 end
