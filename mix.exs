@@ -20,6 +20,7 @@ defmodule ChosenApi.Mixfile do
   def application do
     [
       mod: {ChosenApi.Application, []},
+      applications: [:arc_ecto],
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -44,7 +45,9 @@ defmodule ChosenApi.Mixfile do
       {:bamboo_smtp, "~> 1.4.0"},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 4.0"},
-      {:cors_plug, "~> 1.5"}
+      {:cors_plug, "~> 1.5"},
+      {:arc, "~> 0.11.0"},
+      {:arc_ecto, "~> 0.11.0"}
     ]
   end
 

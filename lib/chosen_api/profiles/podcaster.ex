@@ -99,6 +99,7 @@ defmodule ChosenApi.Profiles.Podcaster do
     field :guests, :boolean
     field :travel, :boolean
     field :podcast_production, :boolean
+    field :avatar, ChosenApi.Avatar.Type
     belongs_to :user, User, references: :id
 
     timestamps()
@@ -108,6 +109,7 @@ defmodule ChosenApi.Profiles.Podcaster do
   def changeset(podcaster, attrs) do
     podcaster
     |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts, :references, :profile_state, :talks, :workshops, :foreign_language, :record_outside, :guests, :travel, :podcast_production])
+    |> cast_attachments(attrs, [:avatar])
     |> validate_required([:forename])
   end
 end
