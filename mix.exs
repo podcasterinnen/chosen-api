@@ -20,7 +20,6 @@ defmodule ChosenApi.Mixfile do
   def application do
     [
       mod: {ChosenApi.Application, []},
-      applications: [:arc_ecto],
       extra_applications: [:logger, :runtime_tools]
     ]
   end

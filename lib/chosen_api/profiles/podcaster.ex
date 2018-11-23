@@ -73,6 +73,7 @@ defmodule ChosenApi.Profiles.Podcaster do
   end
 
   use Ecto.Schema
+  use Arc.Ecto.Schema
   import Ecto.Changeset
   alias ChosenApi.Accounts.User
   require Logger
