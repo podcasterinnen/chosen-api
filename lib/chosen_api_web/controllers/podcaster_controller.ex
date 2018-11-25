@@ -35,10 +35,12 @@ defmodule ChosenApiWeb.PodcasterController do
     render(conn, "show.json", podcaster: podcaster)
   end
 
-  def update(conn, %{"id" => id, "podcaster" => podcaster_params}) do
-    podcaster = Profiles.get_podcaster!(id)
+  def update(conn, %{"id" => id, "podcaster" => podcaster_json, "avatar" => avatar}) do
+    podcaster             = Profiles.get_podcaster!(id)
+    podcaster_params      = Poison.decode!(podcaster_json)
+    podcaster_with_avatar = Map.put(podcaster_params, "avatar", avatar)
 
-    with {:ok, %Podcaster{} = podcaster} <- Profiles.update_podcaster(podcaster, podcaster_params) do
+    with {:ok, %Podcaster{} = podcaster} <- Profiles.update_podcaster(podcaster, podcaster_with_avatar) do
       render(conn, "show.json", podcaster: podcaster)
     end
   end

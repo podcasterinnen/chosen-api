@@ -8,7 +8,7 @@ defmodule ChosenApi.Avatar do
   def __storage, do: Arc.Storage.Local
 
   # To add a thumbnail version:
-  # @versions [:original, :thumb]
+  @versions [:original, :thumb]
 
   # Override the bucket on a per definition basis:
   # def bucket do
