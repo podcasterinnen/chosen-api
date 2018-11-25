@@ -8,6 +8,9 @@ defmodule ChosenApiWeb.Endpoint do
   plug Plug.Static,
     at: "/", from: :chosen_api, gzip: false
 
+  plug Plug.Static, 
+    at: "/uploads", from: "uploads"
+
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
