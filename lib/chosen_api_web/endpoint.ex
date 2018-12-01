@@ -36,7 +36,7 @@ defmodule ChosenApiWeb.Endpoint do
     key: "_chosen_api_key",
     signing_salt: "QfQ/VaM5"
 
-  plug CORSPlug, [origin: "http://localhost:3000"]
+  plug CORSPlug, origin: ["http://localhost:3000", "https://test.podcasterinnen.org", "https://podcasterinnen.org"]
 
   plug ChosenApiWeb.Router
 
