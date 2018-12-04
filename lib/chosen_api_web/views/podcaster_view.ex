@@ -34,7 +34,8 @@ defmodule ChosenApiWeb.PodcasterView do
       guests: podcaster.guests,
       travel: podcaster.travel,
       podcast_production: podcaster.podcast_production,
-      avatar: ChosenApi.Avatar.url({podcaster.avatar, podcaster}, :original)
+      avatar: ChosenApi.Avatar.url({podcaster.avatar, podcaster}, :original),
+      date_created: podcaster.inserted_at
     }
   end
 end
