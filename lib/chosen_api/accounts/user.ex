@@ -60,7 +60,7 @@ defmodule ChosenApi.Accounts.User do
 
   defp put_pass_hash(changeset), do: changeset
 
-  defp strong_password?(password) when byte_size(password) > 7 do
+  defp strong_password?(password) when byte_size(password) > 11 do
     {:ok, password}
   end
 
