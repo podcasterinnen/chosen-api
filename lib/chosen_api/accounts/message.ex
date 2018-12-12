@@ -37,13 +37,15 @@ defmodule ChosenApi.Accounts.Message do
   An email with a confirmation link in it.
   """
   def confirm_request(address, key) do
-    domain = "https://podcasterinnen.org"
-    if Mix.env == :dev do
-      domain = "localhost:3000"
-    end
-    if Mix.env == :staging do
-      domain = "https://test.podcasterinnen.org"
-    end
+    domain = 
+      cond do
+        Mix.env == :dev ->
+          "localhost:3000"
+        Mix.env == :staging ->
+          "https://test.podcasterinnen.org"
+        true ->
+          "https://podcasterinnen.org"
+      end
 
     prep_mail(address)
     |> subject("podcasterinnen.org – Bestätige deine E-Mail-Adresse")
@@ -64,13 +66,15 @@ defmodule ChosenApi.Accounts.Message do
   end
 
   def reset_request(address, key) do
-    domain = "https://podcasterinnen.org"
-    if Mix.env == :dev do
-      domain = "localhost:3000"
-    end
-    if Mix.env == :staging do
-      domain = "https://test.podcasterinnen.org"
-    end
+    domain = 
+      cond do
+        Mix.env == :dev ->
+          "localhost:3000"
+        Mix.env == :staging ->
+          "https://test.podcasterinnen.org"
+        true ->
+          "https://podcasterinnen.org"
+      end
 
     prep_mail(address)
     |> subject("podcasterinnen.org – Passwort zurücksetzen")
@@ -84,13 +88,15 @@ defmodule ChosenApi.Accounts.Message do
   An email acknowledging that the account has been successfully confirmed.
   """
   def confirm_success(address) do
-    domain = "https://podcasterinnen.org"
-    if Mix.env == :dev do
-      domain = "localhost:3000"
-    end
-    if Mix.env == :staging do
-      domain = "https://test.podcasterinnen.org"
-    end
+    domain = 
+      cond do
+        Mix.env == :dev ->
+          "localhost:3000"
+        Mix.env == :staging ->
+          "https://test.podcasterinnen.org"
+        true ->
+          "https://podcasterinnen.org"
+      end
 
     prep_mail(address)
     |> subject("podcasterinnen.org – Deine E-Mail-Adresse wurde bestätigt")
