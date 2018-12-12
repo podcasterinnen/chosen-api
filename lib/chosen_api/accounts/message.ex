@@ -37,9 +37,17 @@ defmodule ChosenApi.Accounts.Message do
   An email with a confirmation link in it.
   """
   def confirm_request(address, key) do
+    domain = "https://podcasterinnen.org"
+    if Mix.env == :dev do
+      domain = "localhost:3000"
+    end
+    if Mix.env == :staging do
+      domain = "https://test.podcasterinnen.org"
+    end
+
     prep_mail(address)
     |> subject("podcasterinnen.org – Bestätige deine E-Mail-Adresse")
-    |> text_body("Liebe Podcasterin, bitte bestätige deine E-Mail-Adresse indem du auf folgenden Link klickst: https://staging.podcasterinnen.org/confirm?key=#{key}")
+    |> text_body("Liebe Podcasterin, liebe Podcastperson, bitte bestätige deine E-Mail-Adresse indem du auf folgenden Link klickst: #{domain}/confirm?key=#{key}")
     |> Mailer.deliver_now()
   end
 
@@ -50,16 +58,24 @@ defmodule ChosenApi.Accounts.Message do
     prep_mail(address)
     |> subject("podcasterinnen.org – Passwort zurücksetzen")
     |> text_body(
-        "Du hast gerade versucht dein Passwort zurückzusetzen, allerdings konnten wir keinen Userinnen-Account zu deiner E-Mail-Adresse finden. Schreib uns doch eine Mail an contact@podcasterinnen.org. Wir helfen dir gerne weiter. Das podcasterinnen.org-Team"
+        "Liebe Podcasterin, liebe Podcastperson, du hast gerade versucht dein Passwort zurückzusetzen, allerdings konnten wir keinen Userinnen-Account zu deiner E-Mail-Adresse finden. Schreib uns doch eine Mail an contact@podcasterinnen.org. Wir helfen dir gerne weiter. Das podcasterinnen.org-Team"
       )
     |> Mailer.deliver_now()
   end
 
   def reset_request(address, key) do
+    domain = "https://podcasterinnen.org"
+    if Mix.env == :dev do
+      domain = "localhost:3000"
+    end
+    if Mix.env == :staging do
+      domain = "https://test.podcasterinnen.org"
+    end
+
     prep_mail(address)
     |> subject("podcasterinnen.org – Passwort zurücksetzen")
     |> text_body(
-        "Du kannst dein Passwort hier https://staging.podcasterinnen.org/password_resets/edit?key=#{key} zurücksetzen."
+        "Liebe Podcasterin, liebe Podcastperson, du kannst dein Passwort hier #{domain}/password_resets/edit?key=#{key} zurücksetzen."
       )
     |> Mailer.deliver_now()
   end
@@ -68,9 +84,17 @@ defmodule ChosenApi.Accounts.Message do
   An email acknowledging that the account has been successfully confirmed.
   """
   def confirm_success(address) do
+    domain = "https://podcasterinnen.org"
+    if Mix.env == :dev do
+      domain = "localhost:3000"
+    end
+    if Mix.env == :staging do
+      domain = "https://test.podcasterinnen.org"
+    end
+
     prep_mail(address)
     |> subject("podcasterinnen.org – Deine E-Mail-Adresse wurde bestätigt")
-    |> text_body("Liebe Podcasterin, du hast dich erfolgreich bei https://podcasterinnen.org registriert. Um dir ein aussagekräftiges Profil anzulegen, kannst du dich erneut auf der https://podcasterinnen.org/session einloggen und kannst dann sofort loslegen.")
+    |> text_body("Liebe Podcasterin, liebe Podcastperson, du hast dich erfolgreich bei #{domain} registriert. Um dir ein aussagekräftiges Profil anzulegen, kannst du dich erneut auf der #{domain}/session einloggen und kannst dann sofort loslegen.")
     |> Mailer.deliver_now()
   end
 
@@ -80,7 +104,7 @@ defmodule ChosenApi.Accounts.Message do
   def reset_success(address) do
     prep_mail(address)
     |> subject("podcasterinnen.org – Passwort zurückgesetzt")
-    |> text_body("Herzlichen Glückwunsch, dein Passwort wurde zurückgesetzt..")
+    |> text_body("Herzlichen Glückwunsch, dein Passwort wurde zurückgesetzt.")
     |> Mailer.deliver_now()
   end
 
