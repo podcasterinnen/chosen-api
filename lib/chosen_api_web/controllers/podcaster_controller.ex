@@ -8,8 +8,7 @@ defmodule ChosenApiWeb.PodcasterController do
 
   action_fallback ChosenApiWeb.FallbackController
 
-  # TODO use :id_check
-  plug :user_check when action in [:update]
+  plug :id_check when action in [:update]
 
   def index(conn, %{"user_id" => user_id}) do
     podcaster = Profiles.get_podcaster_by_user_id!(user_id)
