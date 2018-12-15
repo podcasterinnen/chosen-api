@@ -35,8 +35,8 @@ defmodule ChosenApiWeb.PodcasterController do
   end
 
   def update(conn, %{"id" => id, "podcaster" => podcaster_json, "avatar" => avatar}) do
-    podcaster             = Profiles.get_podcaster!(id)
     podcaster_params      = Poison.decode!(podcaster_json)
+    podcaster             = Profiles.get_podcaster!(podcaster_params["id"])
     podcaster_with_avatar = Map.put(podcaster_params, "avatar", avatar)
 
     with {:ok, %Podcaster{} = podcaster} <- Profiles.update_podcaster(podcaster, podcaster_with_avatar) do
