@@ -66,4 +66,4 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "secret.exs"
+import_config "secrets.exs"
