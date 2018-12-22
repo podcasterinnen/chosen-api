@@ -20,8 +20,8 @@ config :chosen_api, ChosenApiWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
   salt: System.get_env("AUTH_SALT"),
-  secret: System.get_env("AUTH_SECRET")
-  debug_errors: false,
+  secret: System.get_env("AUTH_SECRET"),
+  debug_errors: false
 
 # Do not print debug messages in production
 config :logger, level: :info
