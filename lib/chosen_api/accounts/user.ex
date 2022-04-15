@@ -8,8 +8,8 @@ defmodule ChosenApi.Accounts.User do
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
-    field :confirmed_at, :utc_datetime
-    field :reset_sent_at, :utc_datetime
+    field :confirmed_at, :utc_datetime_usec
+    field :reset_sent_at, :utc_datetime_usec
     has_one :podcasters, Podcaster, foreign_key: :user_id
     field(:sessions, {:map, :integer}, default: %{})
 

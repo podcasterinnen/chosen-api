@@ -1,7 +1,7 @@
 defmodule ChosenApi.Profiles.Podcaster do
 
   defmodule LanguageType do
-    @behaviour Ecto.Type
+    use Ecto.Type
     def type, do: :map
     def cast(languages) when is_list(languages) do
       # Todo: Ecto Validation
@@ -19,7 +19,7 @@ defmodule ChosenApi.Profiles.Podcaster do
   end
 
   defmodule TagType do
-    @behaviour Ecto.Type
+    use Ecto.Type
     def type, do: :map
     def cast(tags) when is_list(tags) do
       # Todo: Ecto Validation
@@ -37,7 +37,7 @@ defmodule ChosenApi.Profiles.Podcaster do
   end
 
   defmodule PodcastType do
-    @behaviour Ecto.Type
+    use Ecto.Type
     def type, do: :map
     def cast(podcasts) when is_list(podcasts) do
       # Todo: Ecto Validation
@@ -55,7 +55,7 @@ defmodule ChosenApi.Profiles.Podcaster do
   end
 
   defmodule ReferenceType do
-    @behaviour Ecto.Type
+    use Ecto.Type
     def type, do: :map
     def cast(references) when is_list(references) do
       # Todo: Ecto Validation
@@ -109,7 +109,7 @@ defmodule ChosenApi.Profiles.Podcaster do
   @doc false
   def changeset(podcaster, attrs) do
     podcaster
-    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts, :references, :profile_state, :talks, :workshops, :foreign_language, :record_outside, :guests, :travel, :podcast_production])
+    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts, :references, :profile_state, :talks, :workshops, :foreign_language, :record_outside, :guests, :travel, :podcast_production, :user_id])
     |> cast_attachments(attrs, [:avatar])
     |> validate_required([:forename])
   end

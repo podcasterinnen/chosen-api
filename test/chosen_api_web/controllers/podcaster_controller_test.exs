@@ -1,12 +1,9 @@
 defmodule ChosenApiWeb.PodcasterControllerTest do
   use ChosenApiWeb.ConnCase
-
+  import ChosenApiWeb.AuthCase
   alias ChosenApi.Profiles
-  alias ChosenApi.Profiles.Podcaster
 
   @create_attrs %{forename: "some forename", surname: "some surname"}
-  @update_attrs %{forename: "some updated forename", surname: "some updated surname"}
-  @invalid_attrs %{forename: nil, surname: nil}
 
   def fixture(:podcaster) do
     {:ok, podcaster} = Profiles.create_podcaster(@create_attrs)
@@ -14,7 +11,8 @@ defmodule ChosenApiWeb.PodcasterControllerTest do
   end
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    user = add_user_confirmed("reg@fnord.com")
+    {:ok, conn: put_req_header(conn, "accept", "application/json"), user: user}
   end
 
   describe "index" do
@@ -27,20 +25,63 @@ defmodule ChosenApiWeb.PodcasterControllerTest do
   describe "update podcaster" do
     setup [:create_podcaster]
 
-    test "renders podcaster when data is valid", %{conn: conn, podcaster: %Podcaster{id: id} = podcaster} do
-      conn = put conn, podcaster_path(conn, :update, podcaster), podcaster: @update_attrs
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+    test "renders podcaster when data is valid", %{conn: conn, user: user} do
+      {:ok, podcaster} = Profiles.create_podcaster(%{
+        forename: "some forename",
+        surname: "some surname",
+        user_id: user.id
+      })
 
-      conn = get conn, podcaster_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "forename" => "some updated forename",
-        "surname" => "some updated surname"}
+      auth_conn = conn
+                  |> post(session_path(conn, :create), session: %{email: "reg@fnord.com", password: "reallyHard2gue$$"})
+
+      assert json_response(auth_conn, 200)
+
+      avatar = %Plug.Upload{path: "test/fixtures/avatar.jpg", filename: "avatar.jpg"}
+
+      {:ok, json_params} = Jason.encode(%{
+        forename: "some updated forename",
+        surname: "some updated surname",
+        id: podcaster.id
+      })
+
+      response = auth_conn
+                 |> put(podcaster_path(conn, :update, user.id), podcaster: json_params, avatar: avatar)
+                 |> json_response(200)
+
+      assert podcaster.id == response["data"]["id"]
+
+      conn = get conn, podcaster_path(conn, :show, podcaster.id)
+      assert get_response = json_response(conn, 200)
+
+      assert get_response["data"]["id"] == podcaster.id
+      assert get_response["data"]["forename"] == "some updated forename"
+      assert get_response["data"]["surname"] == "some updated surname"
     end
 
-    test "renders errors when data is invalid", %{conn: conn, podcaster: podcaster} do
-      conn = put conn, podcaster_path(conn, :update, podcaster), podcaster: @invalid_attrs
-      assert json_response(conn, 422)["errors"] != %{}
+    test "renders errors when data is invalid", %{conn: conn, user: user} do
+      {:ok, podcaster} = Profiles.create_podcaster(%{
+        forename: "some forename",
+        surname: "some surname",
+        user_id: user.id
+      })
+
+      auth_conn = conn
+                  |> post(session_path(conn, :create), session: %{email: "reg@fnord.com", password: "reallyHard2gue$$"})
+
+      assert json_response(auth_conn, 200)
+
+      avatar = %Plug.Upload{path: "test/fixtures/avatar.jpg", filename: "avatar.jpg"}
+
+      {:ok, json_params} = Jason.encode(%{
+        forename: nil,
+        surname: nil,
+        id: podcaster.id
+      })
+
+      auth_conn
+      |> put(podcaster_path(conn, :update, user.id), podcaster: json_params, avatar: avatar)
+      |> json_response(422)
     end
   end
 
