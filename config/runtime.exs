@@ -58,7 +58,7 @@ if config_env() == :prod do
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
-      ip: System.get_env("HOST"),
+      ip: System.get_env("HOST") |> String.split(".") |> Enum.map(&String.to_integer/1) |> List.to_tuple(),
       port: port
     ],
     secret_key_base: secret_key_base
