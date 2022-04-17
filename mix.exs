@@ -67,7 +67,7 @@ defmodule ChosenApi.Mixfile do
       {:arc, "~> 0.11.0"},
       {:arc_ecto, "~> 0.11.0"},
       {:bamboo, "~> 2.2"},
-      {:mix_test_watch, "~> 1.1"},
+      {:mix_test_watch, "~> 1.1", only: :dev, runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false}
     ]
   end
