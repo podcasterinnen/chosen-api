@@ -63,6 +63,9 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :arc,
+    storage_dir: System.get_env("UPLOAD_DIR")
+
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.
