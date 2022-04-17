@@ -39,6 +39,9 @@ defmodule ChosenApiWeb.PodcasterView do
     }
   end
 
+  def public_avatar_url(nil) do
+    nil
+  end
   def public_avatar_url(url) do
     with(
       {:ok, _} <- System.fetch_env("UPLOAD_DIR")
