@@ -3,7 +3,7 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
-use Mix.Config
+import Config
 
 # General application configuration
 config :chosen_api,
@@ -27,7 +27,7 @@ config :chosen_api, ChosenApi.Mailer,
   adapter: Bamboo.SMTPAdapter,
   port: 587,
   tls: :if_available, # can be `:always` or `:never`
-  allowed_tls_versions: [:"tlsv1", :"tlsv1.1", :"tlsv1.2"], # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
+  allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"], # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
   ssl: false, # can be `true`
   retries: 1,
   no_mx_lookups: false, # can be `true`
@@ -37,6 +37,10 @@ config :chosen_api, ChosenApi.Mailer,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
+config :phoenix, :json_library, Jason
+
+config :esbuild, :version, "0.14.0"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -11,11 +11,6 @@ defmodule ChosenApiWeb.UserController do
   plug(:user_check when action in [:index, :show])
   plug(:id_check when action in [:update, :delete])
 
-  def index(conn, _) do
-    users = Accounts.list_users()
-    render(conn, "index.json", users: users)
-  end
-
   def create(conn, %{"user" => %{"email" => email} = user_params}) do
     key = Phauxth.Token.sign(conn, %{"email" => email})
 
