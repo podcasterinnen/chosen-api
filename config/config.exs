@@ -10,7 +10,7 @@ config :chosen_api,
   ecto_repos: [ChosenApi.Repo]
 
 config :chosen_api, ChosenApi.Mailer,
-  server: "mail11.web-server.biz",
+  relay: "mail11.web-server.biz",
   hostname: "podcasterinnen.org"
 
 # Configures the endpoint
