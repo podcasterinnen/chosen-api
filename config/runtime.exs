@@ -66,6 +66,9 @@ if config_env() == :prod do
   config :arc,
     storage_dir: System.get_env("UPLOAD_DIR")
 
+  config :chosen_api,
+    template_domain: System.fetch_env!("TEMPLATE_DOMAIN")
+
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.
