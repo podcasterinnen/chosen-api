@@ -13,7 +13,7 @@ defmodule ChosenApi.Accounts.MessageTest do
   test "sends confirmation request email", %{email: email, key: key} do
     {:ok, sent_email} = Message.confirm_request(email, key)
     assert sent_email.subject == "podcasterinnen.org – Bestätige deine E-Mail-Adresse"
-    assert sent_email.text_body == "Liebe Podcasterin, liebe Podcastperson, bitte bestätige deine E-Mail-Adresse indem du auf folgenden Link klickst: https://podcasterinnen.org/confirm?key=#{key}"
+    assert sent_email.text_body == "Liebe Podcasterin, liebe Podcastperson, bitte bestätige deine E-Mail-Adresse indem du auf folgenden Link klickst: http://localhost:3000/confirm?key=#{key}"
     assert_delivered_email(sent_email)
   end
 
@@ -25,13 +25,13 @@ defmodule ChosenApi.Accounts.MessageTest do
   test "sends reset password request email", %{email: email, key: key} do
     {:ok, sent_email} = Message.reset_request(email, key)
     assert sent_email.subject == "podcasterinnen.org – Passwort zurücksetzen"
-    assert sent_email.text_body == "Liebe Podcasterin, liebe Podcastperson, du kannst dein Passwort hier https://podcasterinnen.org/password_resets/edit?key=#{key} zurücksetzen."
+    assert sent_email.text_body == "Liebe Podcasterin, liebe Podcastperson, du kannst dein Passwort hier http://localhost:3000/password_resets/edit?key=#{key} zurücksetzen."
     assert_delivered_email(sent_email)
   end
 
   test "sends receipt confirmation email", %{email: email} do
     {:ok, sent_email} = Message.confirm_success(email)
-    assert sent_email.text_body == "Liebe Podcasterin, liebe Podcastperson, du hast dich erfolgreich bei https://podcasterinnen.org registriert. Um dir ein aussagekräftiges Profil anzulegen, kannst du dich erneut auf der https://podcasterinnen.org/session einloggen und kannst dann sofort loslegen."
+    assert sent_email.text_body == "Liebe Podcasterin, liebe Podcastperson, du hast dich erfolgreich bei http://localhost:3000 registriert. Um dir ein aussagekräftiges Profil anzulegen, kannst du dich erneut auf der http://localhost:3000/session einloggen und kannst dann sofort loslegen."
     assert_delivered_email(sent_email)
   end
 

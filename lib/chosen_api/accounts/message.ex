@@ -37,7 +37,7 @@ defmodule ChosenApi.Accounts.Message do
   An email with a confirmation link in it.
   """
   def confirm_request(address, key) do
-    domain = Application.get_env(:chosen_api, :template_domain, "localhost:3000")
+    domain = Application.get_env(:chosen_api, :template_domain, "http://localhost:3000")
 
     prep_mail(address)
     |> subject("podcasterinnen.org – Bestätige deine E-Mail-Adresse")
@@ -58,7 +58,7 @@ defmodule ChosenApi.Accounts.Message do
   end
 
   def reset_request(address, key) do
-    domain = Application.get_env(:chosen_api, :template_domain, "localhost:3000")
+    domain = Application.get_env(:chosen_api, :template_domain, "http://localhost:3000")
 
     prep_mail(address)
     |> subject("podcasterinnen.org – Passwort zurücksetzen")
@@ -72,11 +72,11 @@ defmodule ChosenApi.Accounts.Message do
   An email acknowledging that the account has been successfully confirmed.
   """
   def confirm_success(address) do
-    domain = Application.get_env(:chosen_api, :template_domain, "localhost:3000")
+    domain = Application.get_env(:chosen_api, :template_domain, "http://localhost:3000")
 
     prep_mail(address)
     |> subject("podcasterinnen.org – Deine E-Mail-Adresse wurde bestätigt")
-    |> text_body("Liebe Podcasterin, liebe Podcastperson, du hast dich erfolgreich bei #{domain} registriert. Um dir ein aussagekräftiges Profil anzulegen, kannst du dich erneut auf der #{domain}/session einloggen und kannst dann sofort loslegen.")
+    |> text_body("Liebe Podcasterin, liebe Podcastperson, du hast dich erfolgreich bei http://localhost:3000 registriert. Um dir ein aussagekräftiges Profil anzulegen, kannst du dich erneut auf der #{domain}/session einloggen und kannst dann sofort loslegen.")
     |> Mailer.deliver_now()
   end
 
