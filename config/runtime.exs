@@ -69,6 +69,10 @@ if config_env() == :prod do
   config :chosen_api,
     template_domain: System.fetch_env!("TEMPLATE_DOMAIN")
 
+  config :chosen_api, ChosenApi.Mailer,
+    username: "no-reply@podcasterinnen.org", # or {:system, "SMTP_USERNAME"}
+    password: System.fetch_env!("SMTP_PASSWORD") # or {:system, "SMTP_PASSWORD"}
+
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.

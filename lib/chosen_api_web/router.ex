@@ -22,7 +22,7 @@ defmodule ChosenApiWeb.Router do
   end
 
   if Mix.env == :dev do
-    forward "/sent_emails", Bamboo.SentEmailViewerPlug
+    forward "/mailbox", Plug.Swoosh.MailboxPreview
   end
 
 end

@@ -28,4 +28,4 @@ config :bcrypt_elixir, log_rounds: 4
 
 # Mailer test configuration
 config :chosen_api, ChosenApi.Mailer,
-  adapter: Bamboo.TestAdapter
+  adapter: Swoosh.Adapters.Test

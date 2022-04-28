@@ -9,6 +9,10 @@ import Config
 config :chosen_api,
   ecto_repos: [ChosenApi.Repo]
 
+config :chosen_api, ChosenApi.Mailer,
+  server: "mail11.web-server.biz",
+  hostname: "podcasterinnen.org"
+
 # Configures the endpoint
 config :chosen_api, ChosenApiWeb.Endpoint,
   url: [host: "localhost"],
@@ -24,9 +28,9 @@ config :phauxth,
 
 # Mailer configuration
 config :chosen_api, ChosenApi.Mailer,
-  adapter: Bamboo.SMTPAdapter,
+  adapter: Swoosh.Adapters.SMTP,
   port: 587,
-  tls: :if_available, # can be `:always` or `:never`
+  tls: :always,
   allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"], # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
   ssl: false, # can be `true`
   retries: 1,

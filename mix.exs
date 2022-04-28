@@ -55,6 +55,7 @@ defmodule ChosenApi.Mixfile do
       {:phoenix_live_dashboard, "~> 0.6"},
       {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
+      {:gen_smtp, "~> 1.1"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
@@ -66,7 +67,6 @@ defmodule ChosenApi.Mixfile do
       {:cors_plug, "~> 3.0"},
       {:arc, "~> 0.11.0"},
       {:arc_ecto, "~> 0.11.0"},
-      {:bamboo, "~> 2.2"},
       {:mix_test_watch, "~> 1.1", only: :dev, runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false}
     ]

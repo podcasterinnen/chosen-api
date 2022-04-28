@@ -41,7 +41,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :chosen_api, ChosenApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
+  username: "hukl",
   password: "postgres",
   database: "chosen_api_dev",
   hostname: "localhost",
@@ -49,4 +49,4 @@ config :chosen_api, ChosenApi.Repo,
 
 # Mailer configuration
 config :chosen_api, ChosenApi.Mailer,
-  adapter: Bamboo.LocalAdapter
+  adapter: Swoosh.Adapters.Local
