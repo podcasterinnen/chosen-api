@@ -57,4 +57,8 @@ jobs:
       - name: Production build & release
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         run: |
-          cp /tmp/${{env.BUILD_NAME}}.tgz /tmp/foo.tgz
+          mkdir /usr/local/www/chosen_api_production/${{env.BUILD_NAME}}
+          tar xzf /tmp/${{env.BUILD_NAME}}.tgz -C /usr/local/www/chosen_api_production/${{env.BUILD_NAME}}
+          sudo chown -R chosen:chosen /usr/local/www/chosen_api_production/${{env.BUILD_NAME}}/
+          ln -sF /usr/local/www/chosen_api_production/${{env.BUILD_NAME}} /usr/local/www/chosen_api_production/current
+          sudo service chosen_api_production restart
