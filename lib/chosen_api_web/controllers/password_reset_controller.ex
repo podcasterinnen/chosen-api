@@ -8,7 +8,7 @@ defmodule ChosenApiWeb.PasswordResetController do
     message = "Check your inbox for instructions on how to reset your password"
     conn
     |> put_status(:created)
-    |> render(ChosenApiWeb.PasswordResetView, "info.json", %{info: message})
+    |> render("info.json", %{info: message})
   end
 
   def update(conn, %{"password_reset" => params}) do
@@ -18,7 +18,7 @@ defmodule ChosenApiWeb.PasswordResetController do
 
       {:error, message} ->
         put_status(conn, :unprocessable_entity)
-        |> render(ChosenApiWeb.PasswordResetView, "error.json", error: message)
+        |> render("error.json", error: message)
     end
   end
 
@@ -26,13 +26,13 @@ defmodule ChosenApiWeb.PasswordResetController do
     Accounts.Message.reset_success(user.email)
     message = "Your password has been reset"
 
-    render(conn, ChosenApiWeb.PasswordResetView, "info.json", %{info: message})
+    render(conn, "info.json", %{info: message})
   end
 
   defp update_password({:error, %Ecto.Changeset{} = changeset}, conn, _params) do
     message = with p <- changeset.errors[:password], do: elem(p, 0)
 
     put_status(conn, :unprocessable_entity)
-    |> render(ChosenApiWeb.PasswordResetView, "error.json", error: message || "Invalid input")
+    |> render("error.json", error: message || "Invalid input")
   end
 end

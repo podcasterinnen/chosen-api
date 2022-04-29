@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # For production, we often load configuration from external
 # sources, such as your system environment. For this reason,
@@ -66,4 +66,4 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "secrets.exs"
+# import_config "secrets.exs"

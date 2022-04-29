@@ -10,7 +10,7 @@ defmodule ChosenApiWeb.ConfirmController do
         Accounts.confirm_user(user)
         message = "Your account has been confirmed"
         Accounts.Message.confirm_success(user.email)
-        render(conn, ChosenApiWeb.ConfirmView, "info.json", %{info: message})
+        render(conn, "info.json", %{info: message})
       {:error, _message} ->
         error(conn, :unauthorized, 401)
     end

@@ -1,0 +1,60 @@
+name: Chosen Api Build
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'master'
+      - 'develop'
+    tags:
+      - '*'
+
+jobs:
+  ci-run:
+    name: Build, test & deploy
+    runs-on: [self-hosted, freebsd, amd64]
+    env:
+      mix: /usr/local/elixir/bin/mix
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Add mix to path
+        run: echo "/usr/local/elixir/bin" >> $GITHUB_PATH
+
+      - name: Fetch dependencies
+        run: |
+          mix local.hex --force && mix local.rebar --force
+          mix deps.get
+
+      - name: Tests
+        run: |
+          cp config/test_ci.exs config/test.exs
+          MIX_ENV=test mix ecto.reset
+          mix test
+
+      - name: Build release
+        if: github.event_name == 'push' &&
+          (github.ref == 'refs/heads/develop' ||
+          startsWith(github.ref, 'refs/tags/'))
+        run: |
+          MIX_ENV=prod mix release chosen_api
+          build_name=$(date +%Y%m%d%H%M%S)
+          echo "BUILD_NAME=$build_name" >> $GITHUB_ENV
+          cp _build/prod/chosen_api-*.tar.gz /tmp/$build_name.tgz
+
+      - name: Deploy to staging
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        run: |
+          mkdir /usr/local/www/chosen_api_staging/${{env.BUILD_NAME}}
+          tar xzf /tmp/${{env.BUILD_NAME}}.tgz -C /usr/local/www/chosen_api_staging/${{env.BUILD_NAME}}
+          sudo chown -R chosen:chosen /usr/local/www/chosen_api_staging/${{env.BUILD_NAME}}/
+          ln -sF /usr/local/www/chosen_api_staging/${{env.BUILD_NAME}} /usr/local/www/chosen_api_staging/current
+          sudo service chosen_api_staging restart
+
+      - name: Production build & release
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        run: |
+          cp /tmp/${{env.BUILD_NAME}}.tgz /tmp/foo.tgz
