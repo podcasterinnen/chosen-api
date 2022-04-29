@@ -34,8 +34,22 @@ defmodule ChosenApiWeb.PodcasterView do
       guests: podcaster.guests,
       travel: podcaster.travel,
       podcast_production: podcaster.podcast_production,
-      avatar: ChosenApi.Avatar.url({podcaster.avatar, podcaster}, :original),
+      avatar: public_avatar_url(ChosenApi.Avatar.url({podcaster.avatar, podcaster}, :original)),
       date_created: podcaster.inserted_at
     }
+  end
+
+  def public_avatar_url(nil) do
+    nil
+  end
+  def public_avatar_url(url) do
+    with(
+      {:ok, _} <- System.fetch_env("UPLOAD_DIR")
+    ) do
+      Regex.replace(~r/^\/.+(\/uploads.+)$/, url, "\\1")
+    else
+      _ ->
+        url
+    end
   end
 end

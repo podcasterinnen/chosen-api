@@ -1,5 +1,5 @@
 defmodule ChosenApiWeb.AuthCase do
-  use Phoenix.ConnTest
+  import Plug.Conn
 
   import Ecto.Changeset
   alias ChosenApi.{Accounts, Repo}

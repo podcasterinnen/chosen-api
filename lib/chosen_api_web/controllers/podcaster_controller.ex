@@ -35,13 +35,9 @@ defmodule ChosenApiWeb.PodcasterController do
   end
 
   def update(conn, %{"id" => id, "podcaster" => podcaster_json, "avatar" => avatar}) do
-    podcaster_params      = Poison.decode!(podcaster_json)
-    podcaster             = Profiles.get_podcaster_by_user_id!(id)
-    podcaster_with_avatar = Map.put(podcaster_params, "avatar", avatar)
-
-    # require Logger
-    # Logger.debug inspect podcaster.id, pretty: true, limit: 30000
-    # Logger.debug inspect podcaster_params["id"], pretty: true, limit: 30000
+    {:ok, podcaster_params} = Jason.decode(podcaster_json)
+    podcaster               = Profiles.get_podcaster_by_user_id!(id)
+    podcaster_with_avatar   = Map.put(podcaster_params, "avatar", avatar)
 
     cond do
       podcaster_params["id"] == podcaster.id ->
@@ -51,8 +47,6 @@ defmodule ChosenApiWeb.PodcasterController do
       true ->
         error(conn, :unauthorized, 401)
     end
-
-    
   end
 
   def delete(conn, %{"id" => id}) do

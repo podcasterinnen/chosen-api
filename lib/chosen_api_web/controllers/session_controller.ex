@@ -22,7 +22,7 @@ defmodule ChosenApiWeb.SessionController do
         Login.add_session(conn, session_id, user.id)
         |> add_remember_me(user.id, params)
         |> render("info.json", %{info: user.id})
-      {:error} ->
+      {:error, _} ->
         error(conn, :unauthorized, 401)
     end
   end

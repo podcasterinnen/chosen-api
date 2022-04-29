@@ -8,7 +8,7 @@ defmodule ChosenApiWeb.Endpoint do
   plug Plug.Static,
     at: "/", from: :chosen_api, gzip: false
 
-  plug Plug.Static, 
+  plug Plug.Static,
     at: "/uploads", from: "uploads"
 
   # Code reloading can be explicitly enabled under the
@@ -23,7 +23,7 @@ defmodule ChosenApiWeb.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Poison
+    json_decoder: Phoenix.json_library()
 
   plug Plug.MethodOverride
   plug Plug.Head

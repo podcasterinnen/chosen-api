@@ -1,3 +1,3 @@
 defmodule ChosenApi.Mailer do
-  use Bamboo.Mailer, otp_app: :chosen_api
+  use Swoosh.Mailer, otp_app: :chosen_api
 end

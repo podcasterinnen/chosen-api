@@ -13,11 +13,6 @@ defmodule ChosenApi.AccountsTest do
     user
   end
 
-  test "list_users/1 returns all users" do
-    user = fixture(:user)
-    assert Accounts.list_users() == [user]
-  end
-
   test "get returns the user with given id" do
     user = fixture(:user)
     assert Accounts.get(user.id) == user
@@ -58,7 +53,7 @@ defmodule ChosenApi.AccountsTest do
 
   test "update password changes the stored hash" do
     %{password_hash: stored_hash} = user = fixture(:user)
-    attrs = %{password: "CN8W6kpb"}
+    attrs = %{password: "CN8W6kpbfoobarbaz"}
     {:ok, %{password_hash: hash}} = Accounts.update_password(user, attrs)
     assert hash != stored_hash
   end

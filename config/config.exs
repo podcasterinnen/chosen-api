@@ -3,11 +3,15 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
-use Mix.Config
+import Config
 
 # General application configuration
 config :chosen_api,
   ecto_repos: [ChosenApi.Repo]
+
+config :chosen_api, ChosenApi.Mailer,
+  relay: "mail11.web-server.biz",
+  hostname: "podcasterinnen.org"
 
 # Configures the endpoint
 config :chosen_api, ChosenApiWeb.Endpoint,
@@ -24,10 +28,10 @@ config :phauxth,
 
 # Mailer configuration
 config :chosen_api, ChosenApi.Mailer,
-  adapter: Bamboo.SMTPAdapter,
+  adapter: Swoosh.Adapters.SMTP,
   port: 587,
-  tls: :if_available, # can be `:always` or `:never`
-  allowed_tls_versions: [:"tlsv1", :"tlsv1.1", :"tlsv1.2"], # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
+  tls: :always,
+  allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"], # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
   ssl: false, # can be `true`
   retries: 1,
   no_mx_lookups: false, # can be `true`
@@ -37,6 +41,10 @@ config :chosen_api, ChosenApi.Mailer,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
+config :phoenix, :json_library, Jason
+
+config :esbuild, :version, "0.14.0"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

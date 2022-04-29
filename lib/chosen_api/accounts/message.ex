@@ -30,27 +30,19 @@ defmodule ChosenApi.Accounts.Message do
 
   """
 
-  import Bamboo.Email
+  import Swoosh.Email
   alias ChosenApi.Mailer
 
   @doc """
   An email with a confirmation link in it.
   """
   def confirm_request(address, key) do
-    domain = 
-      cond do
-        Mix.env == :dev ->
-          "localhost:3000"
-        Mix.env == :staging ->
-          "https://test.podcasterinnen.org"
-        true ->
-          "https://podcasterinnen.org"
-      end
+    domain = Application.get_env(:chosen_api, :template_domain, "http://localhost:3000")
 
     prep_mail(address)
     |> subject("podcasterinnen.org – Bestätige deine E-Mail-Adresse")
     |> text_body("Liebe Podcasterin, liebe Podcastperson, bitte bestätige deine E-Mail-Adresse indem du auf folgenden Link klickst: #{domain}/confirm?key=#{key}")
-    |> Mailer.deliver_now()
+    |> Mailer.deliver()
   end
 
   @doc """
@@ -62,46 +54,30 @@ defmodule ChosenApi.Accounts.Message do
     |> text_body(
         "Liebe Podcasterin, liebe Podcastperson, du hast gerade versucht dein Passwort zurückzusetzen, allerdings konnten wir keinen Userinnen-Account zu deiner E-Mail-Adresse finden. Schreib uns doch eine Mail an contact@podcasterinnen.org. Wir helfen dir gerne weiter. Das podcasterinnen.org-Team"
       )
-    |> Mailer.deliver_now()
+    |> Mailer.deliver()
   end
 
   def reset_request(address, key) do
-    domain = 
-      cond do
-        Mix.env == :dev ->
-          "localhost:3000"
-        Mix.env == :staging ->
-          "https://test.podcasterinnen.org"
-        true ->
-          "https://podcasterinnen.org"
-      end
+    domain = Application.get_env(:chosen_api, :template_domain, "http://localhost:3000")
 
     prep_mail(address)
     |> subject("podcasterinnen.org – Passwort zurücksetzen")
     |> text_body(
         "Liebe Podcasterin, liebe Podcastperson, du kannst dein Passwort hier #{domain}/password_resets/edit?key=#{key} zurücksetzen."
       )
-    |> Mailer.deliver_now()
+    |> Mailer.deliver()
   end
 
   @doc """
   An email acknowledging that the account has been successfully confirmed.
   """
   def confirm_success(address) do
-    domain = 
-      cond do
-        Mix.env == :dev ->
-          "localhost:3000"
-        Mix.env == :staging ->
-          "https://test.podcasterinnen.org"
-        true ->
-          "https://podcasterinnen.org"
-      end
+    domain = Application.get_env(:chosen_api, :template_domain, "http://localhost:3000")
 
     prep_mail(address)
     |> subject("podcasterinnen.org – Deine E-Mail-Adresse wurde bestätigt")
     |> text_body("Liebe Podcasterin, liebe Podcastperson, du hast dich erfolgreich bei #{domain} registriert. Um dir ein aussagekräftiges Profil anzulegen, kannst du dich erneut auf der #{domain}/session einloggen und kannst dann sofort loslegen.")
-    |> Mailer.deliver_now()
+    |> Mailer.deliver()
   end
 
   @doc """
@@ -111,11 +87,11 @@ defmodule ChosenApi.Accounts.Message do
     prep_mail(address)
     |> subject("podcasterinnen.org – Passwort zurückgesetzt")
     |> text_body("Herzlichen Glückwunsch, dein Passwort wurde zurückgesetzt.")
-    |> Mailer.deliver_now()
+    |> Mailer.deliver()
   end
 
   defp prep_mail(address) do
-    new_email()
+    new()
     |> to(address)
     |> from("no-reply@podcasterinnen.org")
   end
