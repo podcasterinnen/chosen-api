@@ -26,6 +26,7 @@ defmodule ChosenApiWeb.PodcasterView do
       tags: podcaster.tags,
       languages: podcaster.languages,
       podcasts: podcaster.podcasts,
+      pronouns: podcaster.pronouns,
       profile_state: podcaster.profile_state,
       talks: podcaster.talks,
       workshops: podcaster.workshops,

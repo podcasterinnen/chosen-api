@@ -10,7 +10,7 @@ defmodule ChosenApi.Repo.Migrations.Init do
       add :sessions, {:map, :integer}, default: "{}"
       timestamps()
     end
-    
+
     create table(:podcasters) do
       add :forename, :text
       add :surname, :text
