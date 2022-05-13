@@ -41,7 +41,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :chosen_api, ChosenApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "hukl",
+  username: "postgres",
   password: "postgres",
   database: "chosen_api_dev",
   hostname: "localhost",
