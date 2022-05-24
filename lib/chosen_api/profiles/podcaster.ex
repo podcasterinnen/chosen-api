@@ -54,6 +54,24 @@ defmodule ChosenApi.Profiles.Podcaster do
     def dump(_), do: :error
   end
 
+  defmodule PronounsType do
+    use Ecto.Type
+    def type, do: :map
+    def cast(pronouns) when is_list(pronouns) do
+      # Todo: Ecto Validation
+      # Todo: Pronouns in downcase
+      {:ok, Enum.uniq(pronouns)}
+    end
+    def cast(_), do: :error
+    def load(%{"pronouns" => pronouns}) do
+      {:ok, pronouns}
+    end
+    def dump(pronouns) when is_list(pronouns) do
+      {:ok, %{pronouns: pronouns}}
+    end
+    def dump(_), do: :error
+  end
+
   defmodule ReferenceType do
     use Ecto.Type
     def type, do: :map
@@ -91,6 +109,7 @@ defmodule ChosenApi.Profiles.Podcaster do
     field :languages, LanguageType
     field :tags, TagType
     field :podcasts, PodcastType
+    field :pronouns, PronounsType
     field :references, ReferenceType
     field :profile_state, :string
     field :talks, :boolean
@@ -109,7 +128,34 @@ defmodule ChosenApi.Profiles.Podcaster do
   @doc false
   def changeset(podcaster, attrs) do
     podcaster
-    |> cast(attrs, [:forename, :surname, :city, :country, :website_url, :twitter_url, :remote_possible, :bio_short, :bio_long, :tags, :languages, :podcasts, :references, :profile_state, :talks, :workshops, :foreign_language, :record_outside, :guests, :travel, :podcast_production, :user_id])
+    |> cast(
+      attrs,
+      [
+        :forename,
+        :surname,
+        :city,
+        :country,
+        :website_url,
+        :twitter_url,
+        :remote_possible,
+        :bio_short,
+        :bio_long,
+        :tags,
+        :languages,
+        :podcasts,
+        :pronouns,
+        :references,
+        :profile_state,
+        :talks,
+        :workshops,
+        :foreign_language,
+        :record_outside,
+        :guests,
+        :travel,
+        :podcast_production,
+        :user_id
+      ]
+    )
     |> cast_attachments(attrs, [:avatar])
     |> validate_required([:forename])
   end

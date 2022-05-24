@@ -52,6 +52,7 @@ jobs:
           tar xzf /tmp/${{env.BUILD_NAME}}.tgz -C /usr/local/www/chosen_api_staging/${{env.BUILD_NAME}}
           sudo chown -R chosen:chosen /usr/local/www/chosen_api_staging/${{env.BUILD_NAME}}/
           ln -sF /usr/local/www/chosen_api_staging/${{env.BUILD_NAME}} /usr/local/www/chosen_api_staging/current
+          sudo service chosen_api_staging migrate
           sudo service chosen_api_staging restart
 
       - name: Production build & release
@@ -61,4 +62,5 @@ jobs:
           tar xzf /tmp/${{env.BUILD_NAME}}.tgz -C /usr/local/www/chosen_api_production/${{env.BUILD_NAME}}
           sudo chown -R chosen:chosen /usr/local/www/chosen_api_production/${{env.BUILD_NAME}}/
           ln -sF /usr/local/www/chosen_api_production/${{env.BUILD_NAME}} /usr/local/www/chosen_api_production/current
+          sudo service chosen_api_production migrate
           sudo service chosen_api_production restart
