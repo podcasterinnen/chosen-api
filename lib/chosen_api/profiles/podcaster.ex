@@ -103,6 +103,7 @@ defmodule ChosenApi.Profiles.Podcaster do
     field :country, :string
     field :website_url, :string
     field :twitter_url, :string
+    field :instagram_url, :string
     field :remote_possible, :boolean
     field :bio_short, :string
     field :bio_long, :string
@@ -137,6 +138,7 @@ defmodule ChosenApi.Profiles.Podcaster do
         :country,
         :website_url,
         :twitter_url,
+        :instagram_url,
         :remote_possible,
         :bio_short,
         :bio_long,

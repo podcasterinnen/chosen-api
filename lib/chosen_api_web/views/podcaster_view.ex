@@ -19,6 +19,7 @@ defmodule ChosenApiWeb.PodcasterView do
       country: podcaster.country,
       website_url: podcaster.website_url,
       twitter_url: podcaster.twitter_url,
+      instagram_url: podcaster.instagram_url,
       remote_possible: podcaster.remote_possible,
       bio_short: podcaster.bio_short,
       bio_long: podcaster.bio_long,

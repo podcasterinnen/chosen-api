@@ -4,7 +4,7 @@ defmodule ChosenApi.Mixfile do
   def project do
     [
       app: :chosen_api,
-      version: "0.0.1",
+      version: "1.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:gettext] ++ Mix.compilers(),
